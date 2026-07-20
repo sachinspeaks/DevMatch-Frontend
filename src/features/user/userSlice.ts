@@ -13,7 +13,7 @@ interface UserState {
 }
 
 // Shape of the user object returned by the API (note: `_id`, not `id`).
-interface ApiUser {
+export interface ApiUser {
   _id: string;
   firstName: string;
   lastName: string;

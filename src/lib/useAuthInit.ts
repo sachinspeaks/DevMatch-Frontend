@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
 import { useAppDispatch } from "@/hooks";
 
-import { clearUser, setUser } from "./userSlice";
 import { BASE_URL } from "@/lib/utils";
+import { clearUser, setUser } from "@/features/user/userSlice";
 
 // Public routes a logged-out user is allowed to stay on.
 const PUBLIC_ROUTES = ["/login"];

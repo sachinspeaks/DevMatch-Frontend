@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { Hearts } from "react-loader-spinner";
-import { useAuthInit } from "./features/user/useAuthInit";
+import { useAuthInit } from "./lib/useAuthInit";
 
 // Lives inside <Provider> so it can use the store. Runs the auth check on load
 // and holds the UI until we know whether the user is logged in.
