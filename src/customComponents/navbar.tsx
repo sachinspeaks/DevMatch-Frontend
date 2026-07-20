@@ -1,7 +1,7 @@
 import { Code2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -19,19 +19,23 @@ const links = [
 
 export default function Navbar() {
   const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur">
       <div className="relative flex h-14 w-full items-center justify-between gap-4 px-4 md:px-6">
-        <a href="/" className="flex items-center gap-2 font-semibold">
+        <Link to="/" className="flex items-center gap-2 font-semibold">
           <Code2 className="size-5 text-primary" />
           DevMatch
-        </a>
+        </Link>
 
         <NavigationMenu className="absolute left-1/2 hidden -translate-x-1/2 md:flex">
           <NavigationMenuList>
             {links.map((link) => (
               <NavigationMenuItem key={link.href}>
-                <NavigationMenuLink href={link.href}>
+                <NavigationMenuLink
+                  render={<Link to={link.href} />}
+                  className="hover:bg-accent/25 focus:bg-accent/25"
+                >
                   {link.label}
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -47,7 +51,9 @@ export default function Navbar() {
             className="size-9"
           />
         ) : (
-          <Button size="sm">Sign in</Button>
+          <Button onClick={() => navigate("/login")} size="sm">
+            Log in
+          </Button>
         )}
       </div>
     </header>

@@ -3,23 +3,37 @@ import App from "./App";
 import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Feed from "./pages/feed";
+import ProtectedRoute from "./customComponents/ProtectedRoute";
+import PublicRoute from "./customComponents/PublicRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      // Guest-only routes — redirect to / if already logged in
       {
-        index: true,
-        element: <Feed />,
+        element: <PublicRoute />,
+        children: [
+          {
+            path: "login",
+            element: <Login />,
+          },
+        ],
       },
+      // Protected routes — require a logged-in user
       {
-        path: "login",
-        element: <Login />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <Feed />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+        ],
       },
     ],
   },

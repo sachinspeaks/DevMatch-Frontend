@@ -12,6 +12,8 @@ import {
 import { cn } from "@/lib/utils";
 import { useAppDispatch } from "@/hooks";
 import { clearUser } from "@/features/user/userSlice";
+import { api } from "@/lib/api";
+import { toast } from "sonner";
 
 function UserAvatar({
   firstName,
@@ -29,9 +31,15 @@ function UserAvatar({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(clearUser());
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout");
+      dispatch(clearUser());
+      navigate("/login");
+      toast.success("Successfully Logged Out.");
+    } catch (error) {
+      toast.error("Logout Failed, Try again.");
+    }
   };
 
   return (

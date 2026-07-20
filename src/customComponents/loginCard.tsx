@@ -11,12 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "@/lib/utils";
+import { api } from "@/lib/api";
 
 export function LoginCard() {
   const [email, setEmail] = useState("");
@@ -27,16 +26,10 @@ export function LoginCard() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        BASE_URL + "/login",
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await api.post("/login", {
+        email,
+        password,
+      });
       dispatch(setUser(res.data.user));
       toast.success("Login successful!");
       navigate("/");
