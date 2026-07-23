@@ -12,9 +12,9 @@ import { useAppSelector } from "@/hooks";
 import UserAvatar from "./avatar";
 
 const links = [
-  { label: "Discover", href: "#discover" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
+  { label: "Discover", href: "/feed" },
+  { label: "Subscriptions", href: "#subscriptions" },
+  { label: "Safety", href: "#safety" },
 ];
 
 export default function Navbar() {
@@ -29,7 +29,7 @@ export default function Navbar() {
         </Link>
 
         <NavigationMenu className="absolute left-1/2 hidden -translate-x-1/2 md:flex">
-          <NavigationMenuList>
+          <NavigationMenuList className="gap-x-2">
             {links.map((link) => (
               <NavigationMenuItem key={link.href}>
                 <NavigationMenuLink

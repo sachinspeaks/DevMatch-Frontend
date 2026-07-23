@@ -1,4 +1,4 @@
-import { LogOut, Pencil, Image as ImageIcon } from "lucide-react";
+import { LogOut, User, Users, Inbox } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,13 +20,11 @@ function UserAvatar({
   lastName,
   imageSrc,
   className,
-  onChangeDp,
 }: {
   firstName: string;
   lastName: string;
   imageSrc?: string;
   className?: string;
-  onChangeDp?: () => void;
 }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -73,12 +71,22 @@ function UserAvatar({
             className="px-2 py-1.5 text-sm"
             onClick={() => navigate("/profile")}
           >
-            <Pencil />
-            Edit Profile
+            <User />
+            Profile
           </DropdownMenuItem>
-          <DropdownMenuItem className="py-1 text-sm" onClick={onChangeDp}>
-            <ImageIcon />
-            Change DP
+          <DropdownMenuItem
+            className="px-2 py-1.5 text-sm"
+            onClick={() => navigate("/connections")}
+          >
+            <Users />
+            Connections
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="px-2 py-1.5 text-sm"
+            onClick={() => navigate("/requests")}
+          >
+            <Inbox />
+            Requests
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem

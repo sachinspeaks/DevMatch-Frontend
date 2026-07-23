@@ -174,14 +174,7 @@ function EditProfile({ formData, setFormData, saveProfile }: EditProfileProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="justify-end gap-3">
-        <Button
-          variant="outline"
-          className="hover:bg-primary hover:text-primary-foreground"
-        >
-          Cancel
-        </Button>
-
+      <CardFooter className="justify-end">
         <Button onClick={saveProfile}>Save Changes</Button>
       </CardFooter>
     </Card>

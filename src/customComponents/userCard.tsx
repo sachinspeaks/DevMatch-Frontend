@@ -12,10 +12,11 @@ function UserCard({ user }: { user: FeedUser }) {
     gender?.toLowerCase() === "female" ? femaleAvatar : maleAvatar;
 
   return (
-    <Card className="relative w-80 h-130 overflow-hidden rounded-3xl shadow-xl">
+    <Card className="relative w-80 h-130 overflow-hidden rounded-3xl shadow-xl select-none">
       <img
         src={photoURL || fallbackAvatar}
         alt={`${firstName} ${lastName}`}
+        draggable={false}
         className="h-full w-full object-cover"
       />
 

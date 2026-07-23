@@ -14,7 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/hooks";
 import { setUser } from "../features/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
 
 export function LoginCard() {
@@ -32,7 +32,7 @@ export function LoginCard() {
       });
       dispatch(setUser(res.data.user));
       toast.success("Login successful!");
-      navigate("/");
+      navigate("/profile", { replace: true });
     } catch (error) {
       console.error("Login failed:", error);
       toast.error("Login failed.");
@@ -47,7 +47,9 @@ export function LoginCard() {
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
-          <Button variant="link">Sign Up</Button>
+          <Button variant="link" render={<Link to="/signup" />}>
+            Sign Up
+          </Button>
         </CardAction>
       </CardHeader>
       <CardContent>

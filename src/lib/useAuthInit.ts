@@ -6,13 +6,13 @@ import { useAppDispatch } from "@/hooks";
 
 import { BASE_URL } from "@/lib/utils";
 import { clearUser, setUser } from "@/features/user/userSlice";
-
-// Public routes a logged-out user is allowed to stay on.
-const PUBLIC_ROUTES = ["/login"];
+import { isPublicRoute } from "@/lib/routes";
 
 // Runs once on app load. Uses the auth cookie (sent automatically by `api`)
 // to ask the backend who the current user is, and rehydrates the store.
-// If the cookie is missing/expired/invalid, sends the user to /login.
+// If the cookie is missing/expired/invalid, sends the user to /login — unless
+// they're on a public route (the landing page, login, signup), where a
+// logged-out visitor is welcome to stay.
 // Returns `loading` so the app can hold the UI until the check resolves.
 export function useAuthInit() {
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export function useAuthInit() {
         // state and bounce to login — unless we're already on a public route.
         if (active) {
           dispatch(clearUser());
-          if (!PUBLIC_ROUTES.includes(location.pathname)) {
+          if (!isPublicRoute(location.pathname)) {
             navigate("/login", { replace: true });
           }
         }
