@@ -27,7 +27,7 @@ export function useAuthInit() {
     (async () => {
       try {
         // NOTE: match this to your backend's "get current user" route.
-        const res = await api.get(BASE_URL + "/profile/view");
+        const res = await api.get("/profile/view");
         if (active) dispatch(setUser(res.data.user ?? res.data));
       } catch {
         // No valid session (401 / expired / deleted token). Reset any stale

@@ -112,6 +112,11 @@ function SignUpCard() {
                 required
               />
             </div>
+            {error && (
+              <p className="text-sm text-red-500" role="alert">
+                {error}
+              </p>
+            )}
           </div>
         </form>
       </CardContent>
