@@ -9,6 +9,10 @@ import Requests from "./pages/requests";
 import Connections from "./pages/connections";
 import SignUp from "./pages/signup";
 import Feed from "./pages/feed";
+import About from "./pages/about";
+import Privacy from "./pages/privacy";
+import Contact from "./pages/contact";
+import Chat from "./pages/chat";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +24,19 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      // Static pages — linked from the footer, open to everyone
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "privacy",
+        element: <Privacy />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
       },
       // Guest-only routes — redirect to / if already logged in
       {
@@ -54,6 +71,10 @@ export const router = createBrowserRouter([
           {
             path: "feed",
             element: <Feed />,
+          },
+          {
+            path: "chat/:toUserId",
+            element: <Chat />,
           },
         ],
       },

@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "@/lib/api";
 import { useAppDispatch } from "@/hooks";
 
-import { BASE_URL } from "@/lib/utils";
 import { clearUser, setUser } from "@/features/user/userSlice";
 import { isPublicRoute } from "@/lib/routes";
 

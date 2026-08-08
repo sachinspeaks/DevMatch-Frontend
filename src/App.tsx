@@ -26,9 +26,9 @@ function AppShell() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-background">
+    <div className="h-screen w-full flex flex-col overflow-hidden bg-background">
       <Navbar />
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 min-h-0 flex flex-col overflow-y-auto">
         <Outlet />
       </main>
       <Footer />

@@ -1,9 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { setConnections } from "@/features/connections/connectionSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { Hearts } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 function Connections() {
   const dispatch = useAppDispatch();
@@ -59,7 +61,7 @@ function Connections() {
                     (connection.lastName?.[0] ?? "")}
                 </AvatarFallback>
               </Avatar>
-              <div className="flex min-w-0 flex-col">
+              <div className="flex min-w-0 flex-1 flex-col">
                 <span className="text-sm font-medium">
                   {connection.firstName} {connection.lastName}
                 </span>
@@ -69,6 +71,15 @@ function Connections() {
                   </span>
                 )}
               </div>
+              <Link
+                to={`/chat/${connection.id}`}
+                state={{
+                  chatPartnerName:
+                    `${connection.firstName} ${connection.lastName}`.trim(),
+                }}
+              >
+                <Button className="ml-auto">Chat</Button>
+              </Link>
             </div>
           ))}
         </div>
