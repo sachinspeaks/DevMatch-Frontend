@@ -13,6 +13,7 @@ import About from "./pages/about";
 import Privacy from "./pages/privacy";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
+import Premium from "./pages/premium";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+      {
+        path: "premium",
+        element: <Premium />,
       },
       // Guest-only routes — redirect to / if already logged in
       {

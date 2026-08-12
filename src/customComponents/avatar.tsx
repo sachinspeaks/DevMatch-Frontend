@@ -1,4 +1,4 @@
-import { LogOut, User, Users, Inbox } from "lucide-react";
+import { LogOut, User, Users, Inbox, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -87,6 +87,14 @@ function UserAvatar({
           >
             <Inbox />
             Requests
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="px-2 py-1.5 text-sm"
+            onClick={() => navigate("/premium")}
+          >
+            <Star />
+            Premium
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
