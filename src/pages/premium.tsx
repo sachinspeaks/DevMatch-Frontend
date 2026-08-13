@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks";
 
 const plans = [
@@ -68,6 +68,13 @@ const plans = [
 
 function Premium() {
   const user = useAppSelector((state) => state.user);
+  const [isUserPremium, setIsUserPremium] = useState(false);
+
+  async function verifyPremiumUser() {
+    const res = await api.get("/payment/verify");
+    const { isPremium } = res.data;
+    if (isPremium) setIsUserPremium(true);
+  }
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -105,12 +112,15 @@ function Premium() {
         theme: {
           color: "#dc2626",
         },
+        handler: verifyPremiumUser,
       };
       var rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {}
   }
-  return (
+  return isUserPremium ? (
+    <div>You are already a premium user.</div>
+  ) : (
     <div className="flex flex-1 flex-col">
       <section className="relative overflow-hidden border-b border-border bg-card/30">
         <div className="absolute inset-x-0 top-0 h-48 bg-linear-to-b from-primary/10 to-transparent" />
