@@ -1,4 +1,6 @@
 import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,7 +14,15 @@ import {
 } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "@/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setUser } from "@/features/user/userSlice";
+
+const VERIFY_MAX_ATTEMPTS = 5;
+const VERIFY_RETRY_DELAY_MS = 1500;
+
+function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const plans = [
   {
@@ -68,12 +78,35 @@ const plans = [
 
 function Premium() {
   const user = useAppSelector((state) => state.user);
-  const [isUserPremium, setIsUserPremium] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [isUserPremium, setIsUserPremium] = useState(!!user.isPremium);
 
-  async function verifyPremiumUser() {
-    const res = await api.get("/payment/verify");
-    const { isPremium } = res.data;
-    if (isPremium) setIsUserPremium(true);
+  async function verifyPremiumUser(orderId: string) {
+    for (let attempt = 0; attempt < VERIFY_MAX_ATTEMPTS; attempt++) {
+      try {
+        const res = await api.get("/payment/verify", { params: { orderId } });
+        if (res.data.isPremium) {
+          const profile = await api.get("/profile/view");
+          dispatch(setUser(profile.data.user ?? profile.data));
+          setIsUserPremium(true);
+          toast.success("Payment verified! You're now Premium.");
+          navigate("/premium/success", { replace: true });
+          return;
+        }
+        if (res.data.paymentStatus === "failed") {
+          toast.error("Payment failed. Please try again.");
+          return;
+        }
+      } catch {
+        // keep retrying — the webhook that confirms the payment may not
+        // have landed yet.
+      }
+      await wait(VERIFY_RETRY_DELAY_MS);
+    }
+    toast.error(
+      "We're still confirming your payment. Check back in a minute — it'll update automatically.",
+    );
   }
 
   useEffect(() => {
@@ -112,11 +145,13 @@ function Premium() {
         theme: {
           color: "#dc2626",
         },
-        handler: verifyPremiumUser,
+        handler: () => verifyPremiumUser(orderId),
       };
       var rzp1 = new window.Razorpay(options);
       rzp1.open();
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Could not start checkout. Please try again.");
+    }
   }
   return isUserPremium ? (
     <div>You are already a premium user.</div>

@@ -10,6 +10,8 @@ interface UserState {
   photoURL?: string;
   about?: string;
   skills?: string[];
+  isPremium?: boolean;
+  membershipType?: string;
 }
 
 // Shape of the user object returned by the API (note: `_id`, not `id`).
@@ -23,6 +25,8 @@ export interface ApiUser {
   photoURL?: string;
   about?: string;
   skills?: string[];
+  isPremium?: boolean;
+  membershipType?: string;
 }
 
 const initialState: UserState = {
@@ -48,6 +52,8 @@ const userSlice = createSlice({
       state.photoURL = user.photoURL;
       state.about = user.about;
       state.skills = user.skills;
+      state.isPremium = user.isPremium;
+      state.membershipType = user.membershipType;
     },
     clearUser: () => initialState,
   },

@@ -2,6 +2,7 @@ import { LogOut, User, Users, Inbox, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,11 +20,13 @@ function UserAvatar({
   firstName,
   lastName,
   imageSrc,
+  isPremium,
   className,
 }: {
   firstName: string;
   lastName: string;
   imageSrc?: string;
+  isPremium?: boolean;
   className?: string;
 }) {
   const dispatch = useAppDispatch();
@@ -43,6 +46,12 @@ function UserAvatar({
   return (
     <div className="flex gap-2 items-center">
       <p className="text-sm">Welcome, {firstName}</p>
+      {isPremium && (
+        <Badge className="gap-1 px-2 py-0.5 text-xs">
+          <Star className="size-3" />
+          Premium
+        </Badge>
+      )}
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring/50">
           <Avatar

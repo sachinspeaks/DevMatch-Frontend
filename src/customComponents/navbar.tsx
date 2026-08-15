@@ -48,6 +48,7 @@ export default function Navbar() {
             firstName={user.firstName}
             lastName={user.lastName}
             imageSrc={user.photoURL}
+            isPremium={user.isPremium}
             className="size-9"
           />
         ) : (

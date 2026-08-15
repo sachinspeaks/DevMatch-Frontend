@@ -14,6 +14,7 @@ import Privacy from "./pages/privacy";
 import Contact from "./pages/contact";
 import Chat from "./pages/chat";
 import Premium from "./pages/premium";
+import PremiumSuccess from "./pages/premium-success";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
           {
             path: "chat/:toUserId",
             element: <Chat />,
+          },
+          {
+            path: "premium/success",
+            element: <PremiumSuccess />,
           },
         ],
       },
